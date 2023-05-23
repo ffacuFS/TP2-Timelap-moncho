@@ -1,25 +1,16 @@
-// URL to explain PHASER scene: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/scene/
-
-export default class Juego extends Phaser.Scene {
+export default class Nivel2 extends Phaser.Scene {
   constructor() {
-    // key of the scene
-    // the key will be used to start the scene by other scenes
-    super("juego");
+    super("nivel2");
   }
 
-  init() {
-    // this is called before the scene is created
-    // init variables
-    // take data passed from other scenes
-    // data object param {}
-
-    this.cantidadEstrellas = 0;
+  init(data) {
+    this.cantidadEstrellas = data.cantidadEstrellas;
     console.log("Prueba !");
   }
 
   create() {
     // todo / para hacer: texto de puntaje
-    const map = this.make.tilemap({ key: "map" });
+    const map = this.make.tilemap({ key: "map2" });
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
@@ -101,15 +92,12 @@ export default class Juego extends Phaser.Scene {
     this.cantidadEstrellasTexto = this.add.text(
       15,
       15,
-      "Estrellas recolectadas: 0",
+      "Estrellas recolectadas: " + this.cantidadEstrellas,
       { fontSize: "15px", fill: "#FFFFFF" }
     );
   }
 
   update() {
-    // update game objects
-    // check input
-    //move left
     if (this.cursors.left.isDown) {
       this.jugador.setVelocityX(-160);
       this.jugador.anims.play("left", true);
@@ -142,14 +130,13 @@ export default class Juego extends Phaser.Scene {
       "Estrellas recolectadas: " + this.cantidadEstrellas
     );
   }
-
   esVencedor(jugador, salida) {
     // if (this.cantidadEstrellas >= 5)
     // sacamos la condicion porque esta puesta como 4to parametro en el overlap
 
     console.log("estrellas recolectadas", this.cantidadEstrellas);
 
-    this.scene.start("nivel2", {
+    this.scene.start("fin", {
       cantidadEstrellas: this.cantidadEstrellas,
       y: "este es un dato de muestra",
       z: "este es otro atributo enviado a otro escena",
